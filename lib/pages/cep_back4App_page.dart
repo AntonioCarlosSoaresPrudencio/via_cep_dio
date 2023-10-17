@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:via_cep/model/cep_back4App_model.dart';
-
 import '../repositories/tarefas_back4app_repository.dart';
+import 'package:flutter/material.dart';
 
 
 class CepBack4App extends StatefulWidget {
@@ -48,7 +46,7 @@ class _CepBack4App extends State<CepBack4App> {
                 final cep = _ceps.ceps[index];
                 return InkWell(
                   onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (_) => CommentPage(postId: cep.id!)));
+                    // Navigator.push(context, MaterialPageRoute(builder: (_) => CommentPage(postId: cep.id!));
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -57,14 +55,24 @@ class _CepBack4App extends State<CepBack4App> {
                     ),
                     margin: const EdgeInsets.all(8.0),
                     padding: const EdgeInsets.all(8.0),
-                    child: ListTile(
-                      title: Text(cep.cep ?? ""),
-                      subtitle: Text(cep.logradouro ?? ""),
-                    ),
+                  child: ListTile(
+                  title: Text(cep.cep ?? ""),
+                  subtitle: Text(cep.logradouro ?? ""),
+                  trailing: IconButton(
+                    icon: const Icon(Icons.recycling),
+                    onPressed: () {
+                      // print("IdCEP: ${cep.objectId.toString()}");
+                      // print("IdCEP: ${cep.cep.toString()}");
+                      removeLista(cep.objectId!);
+                    },
                   ),
+                ),
+
+                ),
                 );
               },
             ),
+
           ),
         ],
       ),
@@ -127,6 +135,15 @@ class _CepBack4App extends State<CepBack4App> {
     CEPBack4AppModel cepParaCadastrar = CEPBack4AppModel("_objectId", inputCEP, "_logradouro", "_bairro", "_complemento", "_uf", "_createdAt", "_updatedAt");
     await cepBack4AppRepository.criar(cepParaCadastrar);
     pesquisaCEP(inputCEP);
+    setState(() {});
+  }
+
+  void removeLista(String id){
+    for(var cep in _ceps.ceps){
+      if(cep.objectId.toString() == id){
+        _ceps.ceps.remove(cep);
+      }}
+    cepBack4AppRepository.remover(id);
     setState(() {});
   }
 }
