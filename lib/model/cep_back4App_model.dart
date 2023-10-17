@@ -40,6 +40,16 @@ class CEPBack4AppModel {
   String? get complemento => _complemento;
   String? get uf => _uf;
 
+  void set cep(String? cep) {
+    if (cep != null && cep.length == 8) {
+      _cep = cep;
+    } else {
+      throw ArgumentError("CEP deve conter 8 dígitos.");
+    }
+  }
+
+
+
   CEPBack4AppModel.fromJson(Map<String, dynamic> json) {
     _objectId = json['objectId'];
     _cep = json['cep'];
@@ -73,4 +83,5 @@ class CEPBack4AppModel {
     data['uf'] = _uf;
     return data;
   }
+
 }
